@@ -1,20 +1,20 @@
-'use client'
+"use client";
 import React from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function Footer() {
-  const router = useRouter()
+  const router = useRouter();
 
   const logout = async () => {
     try {
-      await axios.post('api/logout')
-      router.push('/login')
-      console.log('logged out')
+      await axios.post("api/logout");
+      router.push("/login");
+      console.log("logged out");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <div>
       <div className="flex justify-around p-[100px]">
@@ -28,13 +28,13 @@ export default function Footer() {
           <p>Connecting world faster</p>
         </div>
         <div className="flex flex-col justify-center items-center">
-        <div className=" w-[100px] bg-blue-300 rounded-[50%] px-2 py-2 flex justify-center">
-          <div className="bg-red-400 rounded-[50%] w-[82px] h-[80px] flex justify-center items-center">
-            <i className="text-white fa-solid fa-handshake text-3xl"></i>
+          <div className=" w-[100px] bg-blue-300 rounded-[50%] px-2 py-2 flex justify-center">
+            <div className="bg-red-400 rounded-[50%] w-[82px] h-[80px] flex justify-center items-center">
+              <i className="text-white fa-solid fa-handshake text-3xl"></i>
+            </div>
           </div>
-        </div>
-        <p className="text-2xl">Most trusted platform</p>
-        <p>Easy to use</p>
+          <p className="text-2xl">Most trusted platform</p>
+          <p>Easy to use</p>
         </div>
       </div>
       <div className="bg-red-400 flex justify-around footer-info p-12">
@@ -52,7 +52,9 @@ export default function Footer() {
             <li>Login</li>
             <li>Register</li>
             <li>Wishlist</li>
-            <li onClick={logout} className="cursor-pointer">Logout</li>
+            <li onClick={logout} className="cursor-pointer">
+              Logout
+            </li>
           </ul>
         </div>
         <div className="space-y-[20px]">

@@ -3,18 +3,18 @@ import jwt from 'jsonwebtoken'
 
 const secretKey = '123456';
 
-export async function GET(NextRequest){
+export async function GET(NextRequest) {
     try {
         const token = NextRequest.cookies.get('token');
-        console.log(token, 'this is the token')
-        if (!token){
-            return NextResponse.json({message: 'token not found'}, {status:401})
+
+        if (!token) {
+            return NextResponse.json({ message: 'token not found' }, { status: 401 })
         }
         jwt.verify(token.value, secretKey)
-        return NextResponse.json({message: 'token verified successfully'}, {status:200})
+        return NextResponse.json({ message: 'token verified successfully' }, { status: 200 })
 
     } catch (error) {
         console.log('token verification failed', error)
-        return NextResponse.json({message:'invailid token'}, {status: 401})
+        return NextResponse.json({ message: 'invailid token' }, { status: 401 })
     }
 }

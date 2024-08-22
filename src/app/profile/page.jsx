@@ -6,20 +6,19 @@ import Upload from "../components/uploads";
 import AddPage from "../components/addCard";
 import Footer from "../components/footer";
 import { Provider } from "react-redux";
-import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../store";
 
 export default function () {
   return (
     <div className="body">
-
-    <Provider store = {store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <Header />
-      <Profile />
-      <Upload />
-      <Footer />
-      </PersistGate>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Header />
+          <Profile />
+          <Upload />
+          <Footer />
+        </PersistGate>
       </Provider>
     </div>
   );

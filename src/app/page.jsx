@@ -7,7 +7,7 @@ import store from "./store";
 export default function LoginPage() {
   return (
     <Provider store={store}>
-    <Login />
+      <Login />
     </Provider>
   );
 }

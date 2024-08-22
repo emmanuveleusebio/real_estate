@@ -12,15 +12,15 @@ const presistConfig = {
 }
 
 const rootReducer = combineReducers({
-    products: productReducer,
-    globalValues: globalReducer,
+  products: productReducer,
+  globalValues: globalReducer,
 });
 
 const persistedReducer = persistReducer(presistConfig, rootReducer)
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware : (getDefaultMiddleware) => 
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),

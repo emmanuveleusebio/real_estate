@@ -4,11 +4,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../features/dataSlice";
+import NProgress from "nprogress";
 
 export default function Login() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.globalValues.loginSuccess);
+  const isAuthenticated = useSelector(
+    (state) => state.globalValues.loginSuccess
+  );
   const [logDetails, setLogDetails] = useState({
     username: "",
     password: "",
@@ -16,6 +19,17 @@ export default function Login() {
   });
   const [showPopup, setShowPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const register = () => {
+    NProgress.start();
+    try {
+      router.push("/register");
+    } catch (error) {
+      console.log("error while redirecting to register page", error);
+    } finally {
+      NProgress.done();
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +40,7 @@ export default function Login() {
   };
 
   const handleSubmit = async () => {
+    NProgress.start();
     try {
       const submitLog = await axios.post("/api/login", logDetails);
       if (submitLog.status === 200) {
@@ -33,7 +48,7 @@ export default function Login() {
           const checkAuth = await axios.get("/api/isAuth");
           if (checkAuth.status === 200) {
             dispatch(loginSuccess());
-            console.log("Is Authenticated:", isAuthenticated);
+
             router.push("/homePage");
           } else {
             setErrorMessage(checkAuth.data.message || "Authentication failed");
@@ -50,6 +65,8 @@ export default function Login() {
     } catch (error) {
       setErrorMessage(error.response?.data.message || error.message);
       setShowPopup(true);
+    } finally {
+      NProgress.done(); // Stop the loading bar
     }
   };
 
@@ -57,11 +74,11 @@ export default function Login() {
     <div className="bg-blue-300">
       <div className="relative">
         <img
-          className="h-screen w-screen object-cover opacity-75"
+          className=" h-screen w-screen object-cover opacity-75"
           src="https://e0.pxfuel.com/wallpapers/436/360/desktop-wallpaper-black-and-white-skyscraper-drawing-building-drawing.jpg"
           alt=""
         />
-        <div className="register-card flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-500 p-5 rounded-xl gap-[35px]">
+        <div className="register-card flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-lg  p-5 rounded-xl gap-[35px]">
           <h1 className="text-3xl font-bold text-white">Login</h1>
 
           <div className="flex flex-col gap-[30px]">
@@ -104,7 +121,10 @@ export default function Login() {
             </label>
           </div>
           <div className="flex gap-[20px] pb-10">
-            <button className="register bg-purple-500 py-2 px-6 rounded-xl text-white">
+            <button
+              onClick={register}
+              className="register bg-purple-500 py-2 px-6 rounded-xl text-white"
+            >
               Register
             </button>
             <button

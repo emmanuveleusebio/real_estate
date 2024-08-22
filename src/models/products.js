@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
     location: String,
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'usersDetails' },
     category: String,
+    image: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 }, { collection: 'products' });

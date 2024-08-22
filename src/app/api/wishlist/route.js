@@ -25,7 +25,21 @@ export async function GET(NextRequest) {
         }
         const productList = await products.find({ _id: { $in: user.properties } })
         console.log(productList, 'this is the productsssss')
-        return NextResponse.json({ productList }, { status: 200 });
+
+
+
+        // Construct the S3 URL for each product
+        const bucketName = process.env.AWS_NAME;
+        const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/`;
+
+        const productsWithImages = productList.map(product => {
+            return {
+                ...product.toObject(),  // Convert mongoose document to plain object
+                imageUrl: s3BaseUrl + product.image // Append the S3 key to the base URL
+            };
+        });
+
+        return NextResponse.json({ productsWithImages }, { status: 200 });
     } catch (error) {
         console.log(error)
         return NextResponse.json({ status: 400 })
@@ -52,9 +66,9 @@ export async function POST(NextRequest) {
             const productIndex = userWishlist.properties.indexOf(details)
             if (productIndex != -1) {
                 userWishlist.properties.splice(productIndex, 1);
-               const newData = await userWishlist.save();
-               const updatedWishlist = await products.find({ _id: { $in: newData.properties } });
-               console.log(updatedWishlist, 'aaaa')
+                const newData = await userWishlist.save();
+                const updatedWishlist = await products.find({ _id: { $in: newData.properties } });
+                console.log(updatedWishlist, 'aaaa')
                 return NextResponse.json({ data: updatedWishlist }, { status: 201 });
             }
             userWishlist.properties.push(details)
@@ -73,7 +87,7 @@ export async function POST(NextRequest) {
             return NextResponse.json({ data: updatedWishlist }, { status: 200 })
         }
 
-       
+
     } catch (error) {
         console.log(error, 'error while posting data')
         return NextResponse.json({ message: 'error while adding to wishlist' }, { status: 400 })

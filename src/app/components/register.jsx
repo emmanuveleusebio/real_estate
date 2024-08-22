@@ -5,11 +5,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { authUser } from "../features/dataSlice";
+import NProgress from "nprogress";
 
 export default function RegisterCard() {
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const [otp, setOtp] = useState('')
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [otp, setOtp] = useState("");
   const [otpField, setOtpField] = useState(false);
   const [details, setDetails] = useState({
     username: "",
@@ -25,27 +26,37 @@ export default function RegisterCard() {
     }));
   };
 
+  const login = () => {
+    NProgress.start();
+    try {
+      router.push("/");
+    } catch (error) {
+      console.log("error while redirecting to login page", error);
+    } finally {
+      NProgress.done();
+    }
+  };
+
   const registerUser = async () => {
     setOtpField(!otpField);
-    const regist = await axios.post("api/register",{
-      action: 'register',
+    const regist = await axios.post("api/register", {
+      action: "register",
       details,
     });
 
     console.log(regist);
   };
   const verify = async () => {
-    const checkOtp = await axios.post('api/register', {
-      action: 'verify',     
+    const checkOtp = await axios.post("api/register", {
+      action: "verify",
       details,
-      enteredOtp:otp,
-    })
-    if(checkOtp.status == 200){
-      
-      router.push('homePage')
+      enteredOtp: otp,
+    });
+    if (checkOtp.status === 200) {
+      router.push("homePage");
     }
-    console.log(checkOtp, 'user added successfully')
-  }
+    console.log(checkOtp, "user added successfully");
+  };
 
   return (
     <div className="bg-blue-300">
@@ -55,7 +66,7 @@ export default function RegisterCard() {
           src="https://e0.pxfuel.com/wallpapers/436/360/desktop-wallpaper-black-and-white-skyscraper-drawing-building-drawing.jpg"
           alt=""
         />
-        <div className="register-card flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-500 p-5 rounded-xl gap-[35px]">
+        <div className="register-card flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-lg p-5 rounded-xl gap-[35px]">
           <h1 className="text-2xl font-bold text-white">Register</h1>
 
           <div className="flex flex-col gap-[30px]">
@@ -106,7 +117,7 @@ export default function RegisterCard() {
             >
               Enter OTP
               <input
-                onChange={(e)=> setOtp(e.target.value)}
+                onChange={(e) => setOtp(e.target.value)}
                 className="rounded-xl py-1 px-7 text-black"
                 type="text"
                 name="otp"
@@ -115,17 +126,22 @@ export default function RegisterCard() {
             </label>
           </div>
           <div className="flex gap-[20px] pb-10">
-            <button className="register bg-purple-500 py-2 px-6 rounded-xl text-white">
+            <button
+              onClick={login}
+              className="register bg-purple-500 py-2 px-6 rounded-xl text-white"
+            >
               Login
             </button>
             <button
               onClick={registerUser}
-              className={`${otpField ? "hidden" : ""} register bg-purple-500 py-2 px-6 rounded-xl text-white`}
+              className={`${
+                otpField ? "hidden" : ""
+              } register bg-purple-500 py-2 px-6 rounded-xl text-white`}
             >
               Register
             </button>
             <button
-            onClick={verify}
+              onClick={verify}
               className={`${
                 otpField ? "" : "hidden"
               } register bg-purple-500 py-2 px-6 rounded-xl text-white`}

@@ -8,14 +8,12 @@ import store from "../store";
 
 export default function Plans() {
   return (
-    <Provider store={store} >
-    <div className="body">
-      
-      <Header />
-      <Cards />
-      <Footer />
-      
-    </div>
+    <Provider store={store}>
+      <div className="body">
+        <Header />
+        <Cards />
+        <Footer />
+      </div>
     </Provider>
   );
 }

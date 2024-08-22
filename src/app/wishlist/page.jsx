@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Wishlist from "../components/wishlist";
 import Header from "../components/header";
@@ -7,13 +7,13 @@ import { Provider } from "react-redux";
 import store from "../store";
 
 export default function WishlistPage() {
-    return(
-        <div className="body ">
-            <Provider store = {store}>
-            <Header />
-            <Wishlist />
-            <Footer />
-            </Provider>
-        </div>
-    )
+  return (
+    <div className="body ">
+      <Provider store={store}>
+        <Header />
+        <Wishlist />
+        <Footer />
+      </Provider>
+    </div>
+  );
 }

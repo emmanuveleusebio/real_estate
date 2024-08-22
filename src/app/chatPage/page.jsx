@@ -7,9 +7,9 @@ import store from "../store";
 export default function ChatPage() {
   return (
     <Provider store={store}>
-    <div className="body">
-      <Chat />
-    </div>
+      <div className="body">
+        <Chat />
+      </div>
     </Provider>
   );
 }

@@ -6,10 +6,10 @@ import store from "../store";
 
 export default function Register() {
   return (
-    <Provider store = {store}>
-    <div>
-    <RegisterCard />
- </div>
- </Provider>
+    <Provider store={store}>
+      <div>
+        <RegisterCard />
+      </div>
+    </Provider>
   );
 }

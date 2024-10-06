@@ -18,11 +18,5 @@ const config: Config = {
   plugins: [],
 };
 
-// module.exports{
-//   theme: {
-//     colors: {
-//       'blue': '#1fb6ff'
-//     }
-//   }
-// }
+
 export default config;

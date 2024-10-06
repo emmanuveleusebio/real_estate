@@ -1,10 +1,8 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../features/proudctSlice";
 import { viewDetails } from "../features/dataSlice";
 import Skelton from "./skeltonLoading";
 import NProgress from "nprogress";
@@ -13,21 +11,24 @@ import "nprogress/nprogress.css";
 export default function Listing() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { products, status, error } = useSelector((state) => state.products);
-  const valuee = useSelector((state) => state.globalValues.productDetails);
-  const auth = useSelector((state) => state.globalValues.isAuth);
+  // const { products, status, error } = useSelector((state) => state.products);
+   const products = useSelector((state) => state.globalValues.filteredProducts);
+  // const products = useSelector((state) => state.globalValues.filteredProduct) || [];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await dispatch(getProducts()).unwrap();
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //      const data = await axios.get('api/Products')
+  //      console.log(data.data.plots, 'kkkkkkkkkkkkkkkkkkklllllllllll')
+  //      dispatch(allPlots(data.data.plots))
+  //       await dispatch(getProducts()).unwrap();
+  //     } catch (error) {
+  //       console.error("Error fetching products:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [dispatch]);
+  //   fetchData();
+  // }, [dispatch]);
 
   const moreDetails = async (details) => {
     NProgress.start();
@@ -59,7 +60,7 @@ export default function Listing() {
     <div className="container m-auto font-sans pt-5 flex justify-center flex-col">
       <div>
         <h1 className="text-3xl p-5 pb-10">Explore</h1>
-        <div className="cardLists p-5 grid grid-cols-4 gap-[60px] m-auto">
+        <div className="cardLists p-5 grid grid-cols-4 gap-[20px] m-auto">
           {products.map((details, index) => (
             <div
               key={index}

@@ -1,8 +1,10 @@
 "use client";
-import React from "react";
+import React, {lazy} from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import Cards from "../components/memberships";
+// import Cards from "../components/memberships";
+const Cards = lazy(() => import("../components/memberships"))
+
 import { Provider } from "react-redux";
 import store from "../store";
 

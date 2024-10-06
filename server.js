@@ -25,13 +25,10 @@ app.prepare().then(() => {
     console.log('A user connected:', socket.id);
 
     socket.on('message', async (msg) => {
-
-      console.log(msg, 'hai how are you are u fine')
       receiverId = msg.receiver;
 
       try {
         await Connect();
-        // console.log('hai u')
         const cookies = socket.request.headers.cookie || '';
         const parsedCookies = cookie.parse(cookies);
         const token = parsedCookies.token;
@@ -41,7 +38,6 @@ app.prepare().then(() => {
         }
         let decodedToken
         try {
-          //  msg.senderId = decodedToken.id;
           const secretKey = '123456'
           decodedToken = jwt.verify(token, secretKey)
 
@@ -51,7 +47,7 @@ app.prepare().then(() => {
             receiver: receiverId,
             content: msg.content
           })
-
+          console.log(saveMes, 'hhhhhhhhhhhhhhhhh')
         } catch (error) {
           console.log(error, 'error while sending message')
         }
@@ -71,5 +67,3 @@ app.prepare().then(() => {
     console.log('> Ready on http://localhost:3000');
   });
 });
-
-
